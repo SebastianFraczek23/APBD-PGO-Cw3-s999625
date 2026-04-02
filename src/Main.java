@@ -1,47 +1,30 @@
-public class Biblioteka {
-    private Ksiazka[] ksiazki;
-    private int liczbaKsiazek;
+public class Main {
+    public static void main(String[] args) {
+        Ksiazka k1 = new Ksiazka("Wiedzmin", "Andrzej Sapkowski", 320, true);
+        Ksiazka k2 = new Ksiazka("Lalka", "Boleslaw Prus", 680, true);
+        Ksiazka k3 = new Ksiazka("Pan Tadeusz", "Adam Mickiewicz", 340, true);
 
-    public Biblioteka(int pojemnosc) {
-        ksiazki = new Ksiazka[pojemnosc];
-        liczbaKsiazek = 0;
-    }
+        Czytelnik c1 = new Czytelnik("Jan", "Kowalski", 1001, 0);
 
-    public void dodajKsiazke(Ksiazka ksiazka) {
-        if (liczbaKsiazek < ksiazki.length) {
-            ksiazki[liczbaKsiazek] = ksiazka;
-            liczbaKsiazek++;
-            System.out.println("Dodano ksiazke: " + ksiazka.getTytul());
-        } else {
-            System.out.println("Brak miejsca w bibliotece.");
-        }
-    }
+        Biblioteka biblioteka = new Biblioteka(10);
 
-    public void wypiszDostepneKsiazki() {
-        System.out.println("Dostepne ksiazki:");
-        for (int i = 0; i < liczbaKsiazek; i++) {
-            if (ksiazki[i].isDostepna()) {
-                ksiazki[i].wypiszInfo();
-            }
-        }
-    }
+        biblioteka.dodajKsiazke(k1);
+        biblioteka.dodajKsiazke(k2);
+        biblioteka.dodajKsiazke(k3);
 
-    public Ksiazka znajdzKsiazkePoTytule(String tytul) {
-        for (int i = 0; i < liczbaKsiazek; i++) {
-            if (ksiazki[i].getTytul().equalsIgnoreCase(tytul)) {
-                return ksiazki[i];
-            }
-        }
-        return null;
-    }
+        System.out.println("\n=== Dostepne ksiazki ===");
+        biblioteka.wypiszDostepneKsiazki();
 
-    public int policzDostepneKsiazki() {
-        int licznik = 0;
-        for (int i = 0; i < liczbaKsiazek; i++) {
-            if (ksiazki[i].isDostepna()) {
-                licznik++;
-            }
-        }
-        return licznik;
+        System.out.println("\n=== Wypozyczenie ===");
+        biblioteka.wypozyczKsiazke("Lalka", c1);
+
+        System.out.println("\n=== Po wypozyczeniu ===");
+        biblioteka.wypiszDostepneKsiazki();
+
+        System.out.println("\n=== Zwrot ===");
+        biblioteka.zwrocKsiazke("Lalka", c1);
+
+        System.out.println("\n=== Po zwrocie ===");
+        biblioteka.wypiszDostepneKsiazki();
     }
 }
