@@ -1,17 +1,47 @@
-public class Main {
-    public static void main(String[] args) {
-        Ksiazka k1 = new Ksiazka("Wiedzmin", "Andrzej Sapkowski", 320, true);
-        Ksiazka k2 = new Ksiazka("Lalka", "Boleslaw Prus", 680, true);
-        Ksiazka k3 = new Ksiazka("Pan Tadeusz", "Adam Mickiewicz", 340, true);
+public class Biblioteka {
+    private Ksiazka[] ksiazki;
+    private int liczbaKsiazek;
 
-        Czytelnik c1 = new Czytelnik("Jan", "Kowalski", 1001, 0);
-        Czytelnik c2 = new Czytelnik("Anna", "Nowak", 1002, 0);
+    public Biblioteka(int pojemnosc) {
+        ksiazki = new Ksiazka[pojemnosc];
+        liczbaKsiazek = 0;
+    }
 
-        k1.wypiszInfo();
-        k2.wypiszInfo();
-        k3.wypiszInfo();
+    public void dodajKsiazke(Ksiazka ksiazka) {
+        if (liczbaKsiazek < ksiazki.length) {
+            ksiazki[liczbaKsiazek] = ksiazka;
+            liczbaKsiazek++;
+            System.out.println("Dodano ksiazke: " + ksiazka.getTytul());
+        } else {
+            System.out.println("Brak miejsca w bibliotece.");
+        }
+    }
 
-        c1.wypiszDane();
-        c2.wypiszDane();
+    public void wypiszDostepneKsiazki() {
+        System.out.println("Dostepne ksiazki:");
+        for (int i = 0; i < liczbaKsiazek; i++) {
+            if (ksiazki[i].isDostepna()) {
+                ksiazki[i].wypiszInfo();
+            }
+        }
+    }
+
+    public Ksiazka znajdzKsiazkePoTytule(String tytul) {
+        for (int i = 0; i < liczbaKsiazek; i++) {
+            if (ksiazki[i].getTytul().equalsIgnoreCase(tytul)) {
+                return ksiazki[i];
+            }
+        }
+        return null;
+    }
+
+    public int policzDostepneKsiazki() {
+        int licznik = 0;
+        for (int i = 0; i < liczbaKsiazek; i++) {
+            if (ksiazki[i].isDostepna()) {
+                licznik++;
+            }
+        }
+        return licznik;
     }
 }
