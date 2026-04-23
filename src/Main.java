@@ -1,30 +1,29 @@
 public class Main {
     public static void main(String[] args) {
-        Ksiazka k1 = new Ksiazka("Wiedzmin", "Andrzej Sapkowski", 320, true);
-        Ksiazka k2 = new Ksiazka("Lalka", "Boleslaw Prus", 680, true);
-        Ksiazka k3 = new Ksiazka("Pan Tadeusz", "Adam Mickiewicz", 340, true);
+        ProduktMenu p1 = new ProduktMenu("K-01", "Espresso", 9.0, "kawa");
+        ProduktMenu p2 = new ProduktMenu("K-02", "Cappuccino", 13.5, "kawa");
+        ProduktMenu p3 = new ProduktMenu("D-01", "Sernik", 16.0, "deser");
 
-        Czytelnik c1 = new Czytelnik("Jan", "Kowalski", 1001, 0);
+        KlientKawiarni klient = new KlientKawiarni(100, "Julia", "Mazur", "j.mazur@mail.pl");
 
-        Biblioteka biblioteka = new Biblioteka(10);
+        Zamowienie zamowienie = new Zamowienie(klient);
+        zamowienie.dodajProdukt(p1);
+        zamowienie.dodajProdukt(p2);
+        zamowienie.dodajProdukt(p3);
 
-        biblioteka.dodajKsiazke(k1);
-        biblioteka.dodajKsiazke(k2);
-        biblioteka.dodajKsiazke(k3);
+        System.out.println(klient);
+        System.out.println(zamowienie);
+        System.out.println("Laczna wartosc: " + zamowienie.policzWartosc());
+        System.out.println("Liczba pozycji: " + zamowienie.policzLiczbeProduktow());
+        System.out.println("Liczba produktow utworzonych w systemie: " + ProduktMenu.getLiczbaProduktow());
 
-        System.out.println("\n=== Dostepne ksiazki ===");
-        biblioteka.wypiszDostepneKsiazki();
+        ProduktMenu kopiaEspresso = new ProduktMenu("K-01", "Espresso duplikat", 9.0, "kawa");
+        System.out.println("Czy produkty sa rowne? " + p1.equals(kopiaEspresso));
 
-        System.out.println("\n=== Wypozyczenie ===");
-        biblioteka.wypozyczKsiazke("Lalka", c1);
+        KlientKawiarni klient2 = new KlientKawiarni(100, "Julia", "Mazur", "inna.poczta@mail.pl");
+        System.out.println("Czy klienci sa rowni? " + klient.equals(klient2));
 
-        System.out.println("\n=== Po wypozyczeniu ===");
-        biblioteka.wypiszDostepneKsiazki();
-
-        System.out.println("\n=== Zwrot ===");
-        biblioteka.zwrocKsiazke("Lalka", c1);
-
-        System.out.println("\n=== Po zwrocie ===");
-        biblioteka.wypiszDostepneKsiazki();
+        zamowienie.oznaczJakoOplacone();
+        System.out.println(zamowienie);
     }
 }
