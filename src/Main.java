@@ -1,29 +1,89 @@
 public class Main {
     public static void main(String[] args) {
-        ProduktMenu p1 = new ProduktMenu("K-01", "Espresso", 9.0, "kawa");
-        ProduktMenu p2 = new ProduktMenu("K-02", "Cappuccino", 13.5, "kawa");
-        ProduktMenu p3 = new ProduktMenu("D-01", "Sernik", 16.0, "deser");
 
-        KlientKawiarni klient = new KlientKawiarni(100, "Julia", "Mazur", "j.mazur@mail.pl");
+        ZespolProjektowy zespol = new ZespolProjektowy("Campus App");
 
-        Zamowienie zamowienie = new Zamowienie(klient);
-        zamowienie.dodajProdukt(p1);
-        zamowienie.dodajProdukt(p2);
-        zamowienie.dodajProdukt(p3);
+        Pracownik p1 = new Programista(
+                "E-101",
+                "Anna",
+                "Maj",
+                12000.0,
+                "Java",
+                4
+        );
 
-        System.out.println(klient);
-        System.out.println(zamowienie);
-        System.out.println("Laczna wartosc: " + zamowienie.policzWartosc());
-        System.out.println("Liczba pozycji: " + zamowienie.policzLiczbeProduktow());
-        System.out.println("Liczba produktow utworzonych w systemie: " + ProduktMenu.getLiczbaProduktow());
+        Pracownik p2 = new Tester(
+                "E-201",
+                "Piotr",
+                "Lis",
+                9800.0,
+                true,
+                25
+        );
 
-        ProduktMenu kopiaEspresso = new ProduktMenu("K-01", "Espresso duplikat", 9.0, "kawa");
-        System.out.println("Czy produkty sa rowne? " + p1.equals(kopiaEspresso));
+        Pracownik p3 = new Programista(
+                "E-102",
+                "Karol",
+                "Wojcik",
+                11500.0,
+                "Kotlin",
+                3
+        );
 
-        KlientKawiarni klient2 = new KlientKawiarni(100, "Julia", "Mazur", "inna.poczta@mail.pl");
-        System.out.println("Czy klienci sa rowni? " + klient.equals(klient2));
+        zespol.dodajPracownika(p1);
+        zespol.dodajPracownika(p2);
+        zespol.dodajPracownika(p3);
 
-        zamowienie.oznaczJakoOplacone();
-        System.out.println(zamowienie);
+        zespol.wypiszSkladZespolu();
+
+        System.out.println("Laczny koszt zespolu: "
+                + zespol.policzLacznyKoszt());
+
+        System.out.println();
+
+        System.out.println(p1.przedstawSie());
+        System.out.println(p2.przedstawSie());
+
+        System.out.println();
+
+        if (p1 instanceof Programista) {
+
+            Programista programista = (Programista) p1;
+
+            programista.wypiszTechnologie();
+        }
+
+        System.out.println();
+
+        if (p2 instanceof Tester) {
+
+            Tester tester = (Tester) p2;
+
+            tester.uruchomRaportTestow();
+        }
+
+        System.out.println();
+
+        System.out.println(
+                p2.equals(
+                        new Tester(
+                                "E-201",
+                                "Inne",
+                                "Dane",
+                                9000.0,
+                                false,
+                                10
+                        )
+                )
+        );
+
+        System.out.println();
+
+        System.out.println("Wyszukiwanie po ID:");
+        System.out.println(zespol.znajdzPoId("E-102"));
+
+        System.out.println();
+
+        zespol.wypiszTesterowAutomatyzujacych();
     }
 }
